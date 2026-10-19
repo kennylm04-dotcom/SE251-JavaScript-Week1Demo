@@ -1,0 +1,90 @@
+//  MAIN FUNCTION 
+
+var p1 = new Box();      
+var ball = new Box();    
+
+var p2 = new Box();      
+p2.x = 740;              
+p2.color = "red";        // Color
+
+var fy = 0.85;           
+
+
+
+
+function main() {
+    
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // 1 INPUT 
+
+    
+    if (keys['w']) {
+        p1.vy += -p1.force;
+    }
+    if (keys['s']) {
+        p1.vy += p1.force;
+    }
+
+    
+    if (keys['ArrowUp']) {
+        p2.vy += -p2.force;
+    }
+    if (keys['ArrowDown']) {
+        p2.vy += p2.force;
+    }
+
+   // 2. Movement
+    p1.vy *= fy;         
+    p1.move();
+
+    p2.vy *= fy;         
+    p2.move();           
+
+    
+
+   
+    if (p1.y < 0) {
+        p1.y = 0;
+    }
+    if (p1.y + p1.h > canvas.height) {
+        p1.y = canvas.height - p1.h;
+    }
+
+    
+    if (p2.y < 0) {
+        p2.y = 0;
+    }
+    if (p2.y + p2.h > canvas.height) {
+        p2.y = canvas.height - p2.h;
+    }
+
+    
+    if (p1.collide(ball)) {
+        ball.x = p1.x + p1.w + ball.w;
+        ball.vx = -ball.vx;
+    }
+
+   
+    if (p2.collide(ball)) {
+        ball.x = p2.x - ball.w;
+        ball.vx = -ball.vx;
+    }
+
+    
+    if (ball.x < 0) {
+        ball.x = canvas.width / 2;
+        ball.y = canvas.height / 2;
+    }
+
+   //new ball
+    if (ball.x > canvas.width) {
+        ball.x = canvas.width / 2;
+        ball.y = canvas.height / 2;
+    }
+
+   
+    p1.draw();           
+    ball.draw();         
+    p2.draw();           
+}
