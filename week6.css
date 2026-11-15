@@ -1,0 +1,7 @@
+.post input {
+    display: none;
+}
+
+#posts.deleting .post input {
+    display: inline;
+}
